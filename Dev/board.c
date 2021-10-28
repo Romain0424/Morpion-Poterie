@@ -1,6 +1,23 @@
 #include "board.h"
 #include <assert.h>
 
+void checkRow(PieceType boardSquares,GameResult *gameResult , Coordinate lastX, Coordinate lastY)
+{
+
+}
+void checkColumn(PieceType boardSquares,GameResult *gameResult , Coordinate lastX, Coordinate lastY)
+{
+
+}
+void checkUpperDiag(PieceType boardSquares,GameResult *gameResult, Coordinate lastX, Coordinate lastY)
+{
+
+}
+void checkDownDiag(PieceType boardSquares,GameResult *gameResult , Coordinate lastX, Coordinate lastY)
+{
+
+}
+
 /**
  * Check if the game has to be ended. Only alignment from the last
  * modified square are checked.
@@ -19,6 +36,12 @@
  */
 static bool isGameFinished (const PieceType boardSquares[3][3], Coordinate lastChangeX, Coordinate lastChangeY, GameResult *gameResult)
 {
+
+    checkRow(boardSquares, gameResult , lastChangeX , lastChangeY);
+    checkColumn(boardSquares, gameResult , lastChangeX , lastChangeY);
+    checkUpperDiag(boardSquares, gameResult , lastChangeX , lastChangeY);
+    checkDownDiag(boardSquares, gameResult , lastChangeX , lastChangeY);
+
   // TODO: à compléter
 }
 

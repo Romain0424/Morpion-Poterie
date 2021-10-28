@@ -1,0 +1,3 @@
+tous les @pre signifient qu'il faut tester la condition.
+Diagonales descendante --> X == Y
+Diagonales montantes X + Y == 2

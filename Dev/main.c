@@ -10,7 +10,7 @@
 
 int main (void)
 {
-	Game_init ();
+    //Game_init ();
 
 	Game_loop ();
 

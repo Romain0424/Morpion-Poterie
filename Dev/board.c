@@ -1,21 +1,70 @@
 #include "board.h"
 #include <assert.h>
 
-void checkRow(PieceType boardSquares,GameResult *gameResult , Coordinate lastX, Coordinate lastY)
+void checkRow(PieceType boardSquares[3][3],GameResult * gameResult , Coordinate lastX, Coordinate lastY)
 {
-
+    if(boardSquares[lastX][lastY] == boardSquares[lastX][(lastY + 1) % 3] && boardSquares[lastX][lastY] == boardSquares[lastX][(lastY + 2) % 3]){
+        switch(Board_getSquareContent(lastX, lastY)){
+        case CIRCLE :
+            * gameResult = CIRCLE_WINS;
+            break;
+        case CROSS :
+            * gameResult = CROSS_WINS;
+            break;
+        case NONE :
+            exit(-100);   //This case should happen only if a mistake in the code has been done.
+            break;
+        }
+    }
 }
-void checkColumn(PieceType boardSquares,GameResult *gameResult , Coordinate lastX, Coordinate lastY)
+void checkColumn(PieceType boardSquares[3][3],GameResult * gameResult , Coordinate lastX, Coordinate lastY)
 {
-
+    if(boardSquares[lastX][lastY] == boardSquares[(lastX + 1) % 3][lastY] && boardSquares[lastX][lastY] == boardSquares[(lastX + 2) % 3][lastY]){
+        switch(Board_getSquareContent(lastX, lastY)){
+        case CIRCLE :
+            * gameResult = CIRCLE_WINS;
+            break;
+        case CROSS :
+            * gameResult = CROSS_WINS;
+            break;
+        case NONE :
+            exit(-101);   //This case should happen only if a mistake in the code has been done.
+            break;
+        }
+    }
 }
-void checkUpperDiag(PieceType boardSquares,GameResult *gameResult, Coordinate lastX, Coordinate lastY)
-{
 
+void checkUpperDiag(PieceType boardSquares[3][3],GameResult *gameResult, Coordinate lastX, Coordinate lastY)
+{
+    if(boardSquares[lastX][lastY] == boardSquares[(lastX + 1) % 3][(lastY - 1) % 3] && boardSquares[lastX][lastY] == boardSquares[(lastX + 2) % 3][(lastY - 2) % 3]){
+        switch(Board_getSquareContent(lastX, lastY)){
+        case CIRCLE :
+            * gameResult = CIRCLE_WINS;
+            break;
+        case CROSS :
+            * gameResult = CROSS_WINS;
+            break;
+        case NONE :
+            exit(-101);   //This case should happen only if a mistake in the code has been done.
+            break;
+        }
+    }
 }
-void checkDownDiag(PieceType boardSquares,GameResult *gameResult , Coordinate lastX, Coordinate lastY)
+void checkDownDiag(PieceType boardSquares[3][3],GameResult *gameResult , Coordinate lastX, Coordinate lastY)
 {
-
+    if(boardSquares[lastX][lastY] == boardSquares[(lastX + 1) % 3][(lastY + 1) % 3] && boardSquares[lastX][lastY] == boardSquares[(lastX + 2) % 3][(lastY + 2) % 3] ){
+        switch(Board_getSquareContent(lastX, lastY)){
+        case CIRCLE :
+            * gameResult = CIRCLE_WINS;
+            break;
+        case CROSS :
+            * gameResult = CROSS_WINS;
+            break;
+        case NONE :
+            exit(-101);   //This case should happen only if a mistake in the code has been done.
+            break;
+        }
+    }
 }
 
 /**
@@ -34,33 +83,72 @@ void checkDownDiag(PieceType boardSquares,GameResult *gameResult , Coordinate la
  *
  * @return a boolean that tells if the game is finished
  */
-static bool isGameFinished (const PieceType boardSquares[3][3], Coordinate lastChangeX, Coordinate lastChangeY, GameResult *gameResult)
+static bool isGameFinished (PieceType boardSquares[3][3], Coordinate lastChangeX, Coordinate lastChangeY, GameResult *gameResult)
 {
-
+    boardSquares[2][0] = CIRCLE;
+    boardSquares[1][1] = CIRCLE;
+    boardSquares[0][2] = CIRCLE;
     checkRow(boardSquares, gameResult , lastChangeX , lastChangeY);
     checkColumn(boardSquares, gameResult , lastChangeX , lastChangeY);
-    checkUpperDiag(boardSquares, gameResult , lastChangeX , lastChangeY);
-    checkDownDiag(boardSquares, gameResult , lastChangeX , lastChangeY);
+    if((lastChangeX + lastChangeY) == 2){
+        checkUpperDiag(boardSquares, gameResult , lastChangeX , lastChangeY);
+    }
+    if(lastChangeX == lastChangeY){
+        checkDownDiag(boardSquares, gameResult , lastChangeX , lastChangeY);
+    }
 
-  // TODO: à compléter
+    if(* gameResult == CIRCLE_WINS){
+        printf("\n\ncercle gagne !");
+    }
+    else {
+        printf("pas gagne");
+    }
 }
 
 void Board_init (SquareChangeCallback onSquareChange, EndOfGameCallback onEndOfGame)
 {
-  // TODO: à compléter
+    for(int i = 0;i<3;i++){
+        for(int j = 0; j<3;j++){
+            board[i][j] = NONE;
+        }
+    }
+    onSquareChange(2,2,NONE);
+    onEndOfGame(DRAW);
 }
 
 void Board_free ()
 {
-  // TODO: à compléter
+ //TO DO
 }
 
 PutPieceResult Board_putPiece (Coordinate x, Coordinate y, PieceType kindOfPiece)
 {
-  // TODO: à compléter
+    if(x <= 2 && x >= 0 && y <= 2 && y >= 0 && kindOfPiece != NONE){
+        if(Board_getSquareContent(x,y) == NONE){
+            board[x][y] = kindOfPiece;
+            isGameFinished(board, x , y, )
+        }
+        else{
+            printf("This case is not empty");
+        }
+    }
+
+
+    printf("put piece");
+    GameResult gameR = DRAW;
+    isGameFinished(board, 0 , 2, &gameR);
+    printf("fin put piece ");
 }
 
 PieceType Board_getSquareContent (Coordinate x, Coordinate y)
 {
-  // TODO: à compléter
+    switch(board[x][y]){
+    case CIRCLE :
+        return CIRCLE;
+    case CROSS :
+        return CROSS;
+        break;
+    case NONE :
+        return NONE;
+    }
 }

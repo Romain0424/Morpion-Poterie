@@ -12,6 +12,8 @@
 
 #include <stdbool.h>
 
+
+
 /**
  * A logic coordinate in the board. This can be
  * used to handle a row or a column number starting at 0.
@@ -31,6 +33,9 @@ typedef enum
 	CROSS,  /**< a cross ("X") piece */
 	CIRCLE  /**< a circle ("O") piece */
 } PieceType;
+
+
+PieceType board[3][3];
 
 /**
  * Result of a piece put action (@see #Board_putPiece)

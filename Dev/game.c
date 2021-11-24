@@ -9,11 +9,24 @@
 #include "board_view.h"
 #include "board.h"
 
+SquareChangeCallback SquareChangeCallBackFunction(Coordinate x, Coordinate y, PieceType newContent){
+    //affichage
+}
 
-
+EndOfGameCallback EndOfGameCallBackFunction(GameResult * Result){
+    //result
+}
 void Game_init (void)
 {
-  // TODO: initialiser tous les modules
+    SquareChangeCallback (*OnSquareChangeCallBack)(Coordinate, Coordinate, PieceType);
+    OnSquareChangeCallBack = &SquareChangeCallBackFunction;
+
+    EndOfGameCallback (*OnEndOfGameCallBack)(GameResult *);
+    OnEndOfGameCallBack = &EndOfGameCallBackFunction;
+
+    Board_init(OnSquareChangeCallBack, OnEndOfGameCallBack);
+    //EndOfGameCallback onEndOfGame = ;
+    //Board_init(onSquareChangeCallBack, onEndOffGame);
 }
 
 void Game_free (void)
@@ -23,7 +36,14 @@ void Game_free (void)
 
 void Game_loop (void)
 {
+<<<<<<< HEAD
     /*Board_init();
     Board_putPiece(1,2,CIRCLE);*/
+=======
+
+    Board_putPiece(0,0,CIRCLE);
+    Board_putPiece(1,1,CIRCLE);
+    Board_putPiece(2,2,CIRCLE);
+>>>>>>> Romain
 	// TODO: à compléter
 }

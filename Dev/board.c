@@ -57,6 +57,7 @@ void checkDownDiag(PieceType boardSquares[3][3],GameResult *gameResult , Coordin
     if(boardSquares[lastX][lastY] == boardSquares[(lastX + 1) % 3][(lastY + 1) % 3] && boardSquares[lastX][lastY] == boardSquares[(lastX + 2) % 3][(lastY + 2) % 3] ){
         switch(Board_getSquareContent(lastX, lastY)){
         case CIRCLE :
+            printf("\n les cerlces gagnent");
             * gameResult = CIRCLE_WINS;
             break;
         case CROSS :
@@ -87,9 +88,10 @@ void checkDownDiag(PieceType boardSquares[3][3],GameResult *gameResult , Coordin
  */
 static bool isGameFinished (PieceType boardSquares[3][3], Coordinate lastChangeX, Coordinate lastChangeY, GameResult *gameResult)
 {
-    boardSquares[2][0] = CIRCLE;
-    boardSquares[1][1] = CIRCLE;
-    boardSquares[0][2] = CIRCLE;
+    printf("is game finished 1");
+    //boardSquares[2][0] = CIRCLE;
+    //boardSquares[1][1] = CIRCLE;
+    //boardSquares[0][2] = CIRCLE;
     checkRow(boardSquares, gameResult , lastChangeX , lastChangeY);
     checkColumn(boardSquares, gameResult , lastChangeX , lastChangeY);
     if((lastChangeX + lastChangeY) == 2){
@@ -98,13 +100,14 @@ static bool isGameFinished (PieceType boardSquares[3][3], Coordinate lastChangeX
     if(lastChangeX == lastChangeY){
         checkDownDiag(boardSquares, gameResult , lastChangeX , lastChangeY);
     }
-
+    printf("is game finished 2");
     if(* gameResult == CIRCLE_WINS){
         printf("\n\ncercle gagne !");
     }
     else {
         printf("pas gagne");
     }
+
 }
 
 void Board_init (SquareChangeCallback onSquareChange, EndOfGameCallback onEndOfGame)
@@ -125,21 +128,23 @@ void Board_free ()
 
 PutPieceResult Board_putPiece (Coordinate x, Coordinate y, PieceType kindOfPiece)
 {
+    GameResult  ResultOfGame = DRAW;
     if(x <= 2 && x >= 0 && y <= 2 && y >= 0 && kindOfPiece != NONE){
         if(Board_getSquareContent(x,y) == NONE){
             board[x][y] = kindOfPiece;
+<<<<<<< HEAD
             /*isGameFinished(board, x , y, )*/
         }
         else{
             printf("This case is not empty");
+=======
+            printf("piece placed");
+            isGameFinished(board, x, y, &ResultOfGame);
+            return PIECE_IN_PLACE;
+>>>>>>> Romain
         }
     }
-
-
-    printf("put piece");
-    GameResult gameR = DRAW;
-    isGameFinished(board, 0 , 2, &gameR);
-    printf("fin put piece ");
+    return SQUARE_IS_NOT_EMPTY;
 }
 
 PieceType Board_getSquareContent (Coordinate x, Coordinate y)
@@ -147,10 +152,12 @@ PieceType Board_getSquareContent (Coordinate x, Coordinate y)
     switch(board[x][y]){
     case CIRCLE :
         return CIRCLE;
+        break;
     case CROSS :
         return CROSS;
         break;
     case NONE :
         return NONE;
+        break;
     }
 }

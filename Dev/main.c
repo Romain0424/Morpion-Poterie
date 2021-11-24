@@ -15,6 +15,5 @@ int main (void)
 	Game_loop ();
 
 	Game_free ();
-    printf("cela fonctionne !");
 	return 0;
 }

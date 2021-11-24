@@ -37,6 +37,7 @@ typedef enum
 
 PieceType board[3][3];
 
+
 /**
  * Result of a piece put action (@see #Board_putPiece)
  */

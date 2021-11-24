@@ -1,5 +1,7 @@
 #include "board.h"
 #include <assert.h>
+#include<stdio.h>
+#include<stdlib.h>
 
 void checkRow(PieceType boardSquares[3][3],GameResult * gameResult , Coordinate lastX, Coordinate lastY)
 {

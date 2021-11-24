@@ -1,0 +1,43 @@
+# depslib dependency file v1.0
+1637767366 source:/home/itii/nicolabe/Bureau/Morpion/Morpion-Poterie/Dev/board.c
+	"board.h"
+	<assert.h>
+	<stdio.h>
+	<stdlib.h>
+
+1637767301 /home/itii/nicolabe/Bureau/Morpion/Morpion-Poterie/Dev/board.h
+	<stdbool.h>
+
+1637741645 source:/home/itii/nicolabe/Bureau/Morpion/Morpion-Poterie/Dev/board_view_text.c
+	"board_view.h"
+	<assert.h>
+	<stdio.h>
+
+1637741645 /home/itii/nicolabe/Bureau/Morpion/Morpion-Poterie/Dev/board_view.h
+	"board.h"
+
+1637767302 source:/home/itii/nicolabe/Bureau/Morpion/Morpion-Poterie/Dev/main.c
+	<stdio.h>
+	"game.h"
+
+1637767302 /home/itii/nicolabe/Bureau/Morpion/Morpion-Poterie/Dev/game.h
+
+1637741645 source:/home/itii/nicolabe/Bureau/Morpion/Morpion-Poterie/Dev/player_manager_mock.c
+	"board.h"
+	<assert.h>
+	<stdio.h>
+
+1637741645 source:/home/itii/nicolabe/Bureau/Morpion/Morpion-Poterie/Dev/tictactoe_erros.c
+	"tictactoe_errors.h"
+	<stdio.h>
+	<stdlib.h>
+
+1637741645 /home/itii/nicolabe/Bureau/Morpion/Morpion-Poterie/Dev/tictactoe_errors.h
+
+1637769171 source:/home/itii/nicolabe/Bureau/Morpion/Morpion-Poterie/Dev/game.c
+	"player_manager.h"
+	"board_view.h"
+	"board.h"
+
+1637741645 /home/itii/nicolabe/Bureau/Morpion/Morpion-Poterie/Dev/player_manager.h
+

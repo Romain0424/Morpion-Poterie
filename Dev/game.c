@@ -36,14 +36,11 @@ void Game_free (void)
 
 void Game_loop (void)
 {
-<<<<<<< HEAD
     /*Board_init();
     Board_putPiece(1,2,CIRCLE);*/
-=======
 
     Board_putPiece(0,0,CIRCLE);
     Board_putPiece(1,1,CIRCLE);
     Board_putPiece(2,2,CIRCLE);
->>>>>>> Romain
 	// TODO: à compléter
 }

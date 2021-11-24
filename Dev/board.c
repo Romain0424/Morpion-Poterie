@@ -57,7 +57,7 @@ void checkDownDiag(PieceType boardSquares[3][3],GameResult *gameResult , Coordin
     if(boardSquares[lastX][lastY] == boardSquares[(lastX + 1) % 3][(lastY + 1) % 3] && boardSquares[lastX][lastY] == boardSquares[(lastX + 2) % 3][(lastY + 2) % 3] ){
         switch(Board_getSquareContent(lastX, lastY)){
         case CIRCLE :
-            printf("\n les cerlces gagnent");
+            printf("les cerlces gagnent (la condition checkDownDiag est respectée.)\n");
             * gameResult = CIRCLE_WINS;
             break;
         case CROSS :
@@ -88,7 +88,7 @@ void checkDownDiag(PieceType boardSquares[3][3],GameResult *gameResult , Coordin
  */
 static bool isGameFinished (PieceType boardSquares[3][3], Coordinate lastChangeX, Coordinate lastChangeY, GameResult *gameResult)
 {
-    printf("is game finished 1");
+    printf("passage dans : isGameFinished\n");
     //boardSquares[2][0] = CIRCLE;
     //boardSquares[1][1] = CIRCLE;
     //boardSquares[0][2] = CIRCLE;
@@ -100,12 +100,12 @@ static bool isGameFinished (PieceType boardSquares[3][3], Coordinate lastChangeX
     if(lastChangeX == lastChangeY){
         checkDownDiag(boardSquares, gameResult , lastChangeX , lastChangeY);
     }
-    printf("is game finished 2");
+    printf("isGamefinished before gameResult Test \n");
     if(* gameResult == CIRCLE_WINS){
-        printf("\n\ncercle gagne !");
+        printf("cercle gagne !\n");
     }
     else {
-        printf("pas gagne");
+        printf("not winning \n");
     }
 
 }
@@ -132,16 +132,9 @@ PutPieceResult Board_putPiece (Coordinate x, Coordinate y, PieceType kindOfPiece
     if(x <= 2 && x >= 0 && y <= 2 && y >= 0 && kindOfPiece != NONE){
         if(Board_getSquareContent(x,y) == NONE){
             board[x][y] = kindOfPiece;
-<<<<<<< HEAD
-            /*isGameFinished(board, x , y, )*/
-        }
-        else{
-            printf("This case is not empty");
-=======
-            printf("piece placed");
+            printf("piece placed\n");
             isGameFinished(board, x, y, &ResultOfGame);
             return PIECE_IN_PLACE;
->>>>>>> Romain
         }
     }
     return SQUARE_IS_NOT_EMPTY;

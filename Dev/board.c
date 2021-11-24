@@ -128,7 +128,7 @@ PutPieceResult Board_putPiece (Coordinate x, Coordinate y, PieceType kindOfPiece
     if(x <= 2 && x >= 0 && y <= 2 && y >= 0 && kindOfPiece != NONE){
         if(Board_getSquareContent(x,y) == NONE){
             board[x][y] = kindOfPiece;
-            isGameFinished(board, x , y, )
+            /*isGameFinished(board, x , y, )*/
         }
         else{
             printf("This case is not empty");

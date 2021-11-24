@@ -23,7 +23,7 @@ void Game_free (void)
 
 void Game_loop (void)
 {
-    Board_init()
-    Board_putPiece(1,2,CIRCLE);
+    /*Board_init();
+    Board_putPiece(1,2,CIRCLE);*/
 	// TODO: à compléter
 }

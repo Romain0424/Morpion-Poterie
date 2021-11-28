@@ -35,9 +35,6 @@ typedef enum
 } PieceType;
 
 
-PieceType board[3][3];
-
-
 /**
  * Result of a piece put action (@see #Board_putPiece)
  */
@@ -73,6 +70,10 @@ typedef void (*SquareChangeCallback) (Coordinate x, Coordinate y, PieceType newC
  */
 typedef void (*EndOfGameCallback) (GameResult result);
 
+//Probably not the way to initialize and keep those variables but it works
+PieceType board[3][3];
+EndOfGameCallback EndOfGameCallbackFunAdress;
+SquareChangeCallback SquareChangeCallbackFunAdress;
 /**
  * The board's constructor.
  *

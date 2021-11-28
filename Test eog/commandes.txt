@@ -1,0 +1,5 @@
+pour lancer les test : 
+	- bien penser à commenter les lignes qu'il faut dans le code pour ne pas avoir de callback
+	  et penser aussi à décommenter la ligne permettant de recopîer le tableau.
+	  
+	- utiliser la commande suivante dans ce directory : gcc main.c test_CheckEndOfGame.c -o outputd

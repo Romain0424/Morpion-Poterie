@@ -8,7 +8,7 @@
  */
 
 // WARNING : ".c" file inclusion only allowed for unit tests !
-#include "board.c"
+#include "../Dev/board.c"
 #include "test_CheckEndOfGame.h"
 #include <stdio.h>
 
@@ -81,7 +81,7 @@ static const BoardDataTest DataTest[] =
 
 };
 
-void testCheckEndOfGame (void)
+void test_CheckEndOfGame (void)
 {
 	int successCount = 0;
 	int failCount = 0;
@@ -91,7 +91,8 @@ void testCheckEndOfGame (void)
 
 	for (int i = 0; i < (sizeof(DataTest) / sizeof(BoardDataTest)); i++)
 	{
-		end = isGameFinished (DataTest[i].board, DataTest[i].lastPutX, DataTest[i].lastPutY, &gameResult);
+		printf("occurence\n");
+		end = isGameFinished (DataTest[i].board, DataTest[i].lastPutY, DataTest[i].lastPutX, &gameResult);
 		if (end != DataTest[i].expectedEndOfGameResult)
 		{
 			printf ("test #%d failed, expected end of game was %s\n", i,
@@ -119,7 +120,6 @@ void testCheckEndOfGame (void)
 			}
 		}
 	}
-
 	printf ("*********\n%d of %d test cases succeeded\n",
 			successCount, successCount + failCount);
 }

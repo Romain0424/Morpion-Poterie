@@ -1,8 +1,14 @@
 #include "board_view.h"
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+//TODO find a way to delete this line with a CONFIG file with Cmake or something else.
+#define CONFIG_TEXTUI
 
 #if defined CONFIG_TEXTUI
+
+
 
 void BoardView_init (void)
 {

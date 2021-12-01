@@ -44,6 +44,7 @@ void EndOfGameCallBackFunction(GameResult result)
 
 void SquareChangeCallBackFunction(Coordinate x, Coordinate y, PieceType newContent)
 {
+    BoardView_displaySquare(x,y,newContent);
     //affichage
 }
 
@@ -69,9 +70,11 @@ void Game_free (void)
 void Game_loop (void)
 {
 	bool TemoinFinPartie = false;
+    BoardView_init();
 	Board_putPiece(0,0,CIRCLE);
 	Board_putPiece(0,1,CIRCLE);
 	Board_putPiece(0,2,CIRCLE);
+
 	/*while(TemoinFinPartie = false){
 		Board_putPiece(0, 1, CROSS);
 

@@ -82,7 +82,7 @@ static bool isBoardFull(const PieceType boardSquares[3][3])
 	return true;
 }
 
-void printBoard()
+void printBoard() //TODO To be deleted
 {
 	printf("print board\n");
 	for(int i = 0;i<3;i++)

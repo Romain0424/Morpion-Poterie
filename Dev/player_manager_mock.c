@@ -8,6 +8,7 @@
 #include "board.h"
 #include "player_manager.h"
 #include "board_view.h"
+#include <assert.h>
 #include <stdio.h>
 
 #if defined CONFIG_PLAYER_MANAGER_MOCK

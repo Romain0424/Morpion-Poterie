@@ -9,5 +9,6 @@ add_executable(ProjetCmakeMorpion ../Dev/board.c
         ../Dev/main.c
         ../Dev/player_manager_mock.c
         ../Dev/tictactoe_erros.c
+        ../Dev/player_manager_scanf.c
         )
-set_target_properties(ProjetCmakeMorpion PROPERTIES COMPILE_OPTIONS "-DCONFIG_TEXTUI;-DCONFIG_PLAYER_MANAGER_MOCK")
+set_target_properties(ProjetCmakeMorpion PROPERTIES COMPILE_OPTIONS "-DCONFIG_TEXTUI;-DCONFIG_PLAYER_MANAGER_SCANF")

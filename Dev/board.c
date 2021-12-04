@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+EndOfGameCallback EndOfGameCallbackFunAdress;
+SquareChangeCallback SquareChangeCallbackFunAdress;
+PieceType board[3][3];
+
 void checkRow(const PieceType boardSquares[3][3],GameResult * gameResult , Coordinate lastX, Coordinate lastY)
 {
     if(boardSquares[lastY][lastX] == boardSquares[lastY][((int)lastX + 1) % 3] && boardSquares[lastY][lastX] == boardSquares[lastY][((int)lastX + 2) % 3])
@@ -82,19 +86,6 @@ static bool isBoardFull(const PieceType boardSquares[3][3])
 	return true;
 }
 
-void printBoard() //TODO To be deleted
-{
-	printf("print board\n");
-	for(int i = 0;i<3;i++)
-		{
-			for(int j = 0; j<3;j++)
-			{
-				printf("%d ", (int)board[j][i]);
-			}
-		printf("\n");
-		}
-}
-
 void copyCurrentBoard(const PieceType boardSquares[3][3])
 {
 	for(int i = 0;i<3;i++)
@@ -102,9 +93,7 @@ void copyCurrentBoard(const PieceType boardSquares[3][3])
 		for(int j = 0; j<3;j++)
 		{
 			board[j][i] = boardSquares[i][j];
-			printf("%d ", (int)board[j][i]);
 		}
-	printf("\n");
 	}
 }
 
@@ -126,9 +115,11 @@ void copyCurrentBoard(const PieceType boardSquares[3][3])
  */
 static bool isGameFinished (const PieceType boardSquares[3][3], Coordinate lastChangeX, Coordinate lastChangeY, GameResult *gameResult)
 {
-	//*gameResult = DRAW; //TODO activate when we want to check the tests (to be modified so we don't do that every time)
-
-	//copyCurrentBoard(boardSquares); //TODO activate when we want to check the tests (to be modified so we don't do that every time)
+    if(EndOfGameCallbackFunAdress == NULL)
+    {
+        *gameResult = DRAW;
+        copyCurrentBoard(boardSquares);
+    }
 
 
     checkRow(board, gameResult , lastChangeX , lastChangeY);
@@ -144,17 +135,23 @@ static bool isGameFinished (const PieceType boardSquares[3][3], Coordinate lastC
 
     if(* gameResult == CIRCLE_WINS)
     {
-        EndOfGameCallbackFunAdress(CIRCLE_WINS); //TODO deactivate when we want to check the tests (to be modified so we don't do that every time)
+        if(EndOfGameCallbackFunAdress != NULL)
+        {
+            EndOfGameCallbackFunAdress(CIRCLE_WINS);
+        }
         return true;
     }
     else if(* gameResult == CROSS_WINS)
     {
-		EndOfGameCallbackFunAdress(CROSS_WINS); //TODO deactivate when we want to check the tests (to be modified so we don't do that every time)
+        if(EndOfGameCallbackFunAdress != NULL)
+        {
+            EndOfGameCallbackFunAdress(CROSS_WINS);
+        } //TODO deactivate when we want to check the tests (to be modified so we don't do that every time)
 		return true;
     }
     else if(isBoardFull(board) == true)
 	{
-    	EndOfGameCallbackFunAdress(NONE); //TODO deactivate when we want to check the tests (to be modified so we don't do that every time)
+    	EndOfGameCallbackFunAdress((GameResult) NONE); //TODO deactivate when we want to check the tests (to be modified so we don't do that every time)
 		return true;
 	}
     else
@@ -191,6 +188,10 @@ void Board_free ()
 
 PutPieceResult Board_putPiece (Coordinate x, Coordinate y, PieceType kindOfPiece)
 {
+    int tmp = x;
+    x = y;
+    y = tmp;
+
     GameResult  ResultOfGame = DRAW;
     if(x <= 2 && x >= 0 && y <= 2 && y >= 0 && kindOfPiece != NONE)
     {
@@ -198,13 +199,13 @@ PutPieceResult Board_putPiece (Coordinate x, Coordinate y, PieceType kindOfPiece
         {
             board[y][x] = kindOfPiece;
 
-            printBoard(board);//TODO delete
-
             printf("piece placed\n");
+            SquareChangeCallbackFunAdress(x,y,kindOfPiece);
             isGameFinished(board, x, y, &ResultOfGame);
             return PIECE_IN_PLACE;
         }
     }
+    else{printf("Please return a valid input\n");}
     return SQUARE_IS_NOT_EMPTY;
 }
 

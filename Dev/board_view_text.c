@@ -2,9 +2,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-//TODO find a way to delete this line with a CONFIG file with Cmake or something else.
-#define CONFIG_TEXTUI
+#include "tictactoe_errors.h"
 
 #if defined CONFIG_TEXTUI
 
@@ -12,24 +10,12 @@ PieceType ViewBoard[3][3];
 
 void BoardView_init (void)
 {
-    //TODO à merger avec la fonction en dessous
-    printf("  A   B   C  \n");
-    for(int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++)
     {
-        printf("%d ",i);
-        for(int j = 0; j < 3; j++)
+        for (int j = 0; j < 3; j++)
         {
             ViewBoard[j][i] = NONE;
-            switch(board[j][i])
-            {
-                case NONE: printf(" "); break;
-                case CIRCLE: printf("O"); break;
-                case CROSS: printf("X"); break;
-            }
-            if(j<2){printf(" | ");}
         }
-        printf("\n");
-        if(i<2){printf("  -----------\n");}
     }
 }
 
@@ -45,7 +31,7 @@ void BoardView_displayAll (void)
         printf("%d ",i);
         for(int j = 0; j < 3; j++)
         {
-            switch(board[j][i])
+            switch(ViewBoard[j][i])
             {
                 case NONE: printf(" "); break;
                 case CIRCLE: printf("O"); break;
@@ -56,6 +42,7 @@ void BoardView_displayAll (void)
         printf("\n");
         if(i<2){printf("  -----------\n");}
     }
+    printf("\n\n");
 }
 
 void BoardView_displaySquare (Coordinate x, Coordinate y, PieceType kindOfPiece)
@@ -66,7 +53,14 @@ void BoardView_displaySquare (Coordinate x, Coordinate y, PieceType kindOfPiece)
 
 void BoardView_displayEndOfGame (GameResult result)
 {
-  // TODO: à compléter
+    switch (result)
+    {
+        case 0 : printf("The game ended in a draw.");break;
+        case 1 : printf("Crooses won !");break;
+        case 2 : printf("Circles won !");break;
+        default :
+            fatalError("The end of game winner is not properly defined.");
+    }
 }
 
 void BoardView_displayPlayersTurn (PieceType thisPlayer)
@@ -76,7 +70,7 @@ void BoardView_displayPlayersTurn (PieceType thisPlayer)
 
 void BoardView_sayCannotPutPiece (void)
 {
-  // TODO: à compléter
+  printf("The square is not empty. Please try again.\n");
 }
 
 #endif // defined CONFIG_TEXTUI

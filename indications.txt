@@ -1,3 +1,2 @@
-tous les @pre signifient qu'il faut tester la condition.
-Diagonales descendante --> X == Y
-Diagonales montantes X + Y == 2
+pour lancer le projet, utiliser Cmake avec le fichier CMakeList.txt situé 
+dans ProjetCmakeMorpion.

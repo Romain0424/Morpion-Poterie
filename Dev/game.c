@@ -11,35 +11,14 @@
 #include "board_view.h"
 #include "board.h"
 
-void circleWinFunCall()
-{
-	printf("Circle win !\n");
-	//TODO functions to call in case circle wins
-}
-
-void crossWinFunCall()
-{
-	printf("Cross win !\n");
-	//TODO functions to call in case cross wins
-}
-
-void drawFunCall()
-{
-	printf("Game ended in a draw.\n");
-	//TODO functions to call in case of a draw
-}
+bool TemoinFinPartie = false;
 
 void EndOfGameCallBackFunction(GameResult result)
 {
-	switch(result)
-	{
-	case 2: circleWinFunCall();break;
-	case 1: crossWinFunCall();break;
-	case 0: drawFunCall();break;
-	default : fatalError("le gagnant n'est pas défini.\n");break;
-	}
-
+    TemoinFinPartie = true;
+	BoardView_displayEndOfGame(result);
 	Board_free();
+    BoardView_free();
 }
 
 void SquareChangeCallBackFunction(Coordinate x, Coordinate y, PieceType newContent)
@@ -69,15 +48,10 @@ void Game_free (void)
 
 void Game_loop (void)
 {
-	bool TemoinFinPartie = false;
     BoardView_init();
-	Board_putPiece(0,0,CIRCLE);
-	Board_putPiece(0,1,CIRCLE);
-	Board_putPiece(0,2,CIRCLE);
-
-	/*while(TemoinFinPartie = false){
-		Board_putPiece(0, 1, CROSS);
-
-	// TODO: à compléter
-	}*/
+    PlayerManager_init();
+    while(TemoinFinPartie == false)
+    {
+        PlayerManager_oneTurn();
+    }
 }

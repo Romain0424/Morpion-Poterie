@@ -1,0 +1,2 @@
+pour lancer les test : 	  
+	- utiliser la commande suivante dans ce directory pour compiler : gcc main.c test_CheckEndOfGame.c ../Dev/tictactoe_erros.c -o outputd

@@ -1,5 +1,4 @@
 #include "board_view.h"
-#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "tictactoe_errors.h"
@@ -26,10 +25,10 @@ void BoardView_free (void)
 void BoardView_displayAll (void)
 {
     printf("  A   B   C  \n");
-    for(int i = 0; i < 3; i++)
+    for(int j = 0; j < 3; j++)
     {
-        printf("%d ",i);
-        for(int j = 0; j < 3; j++)
+        printf("%d ",j);
+        for(int i = 0; i < 3; i++)
         {
             switch(ViewBoard[j][i])
             {
@@ -37,17 +36,17 @@ void BoardView_displayAll (void)
                 case CIRCLE: printf("O"); break;
                 case CROSS: printf("X"); break;
             }
-            if(j<2){printf(" | ");}
+            if(i<2){printf(" | ");}
         }
         printf("\n");
-        if(i<2){printf("  -----------\n");}
+        if(j<2){printf("  -----------\n");}
     }
     printf("\n\n");
 }
 
 void BoardView_displaySquare (Coordinate x, Coordinate y, PieceType kindOfPiece)
 {
-    ViewBoard[y][x] = kindOfPiece; //TODO il doit y avoir un problème ici à checker
+    ViewBoard[y][x] = kindOfPiece;
 	BoardView_displayAll();
 }
 
@@ -65,12 +64,14 @@ void BoardView_displayEndOfGame (GameResult result)
 
 void BoardView_displayPlayersTurn (PieceType thisPlayer)
 {
-  // TODO: à compléter
+    if(thisPlayer == 2){printf("This is CIRCLE turn\n");}
+    else if (thisPlayer == 1){printf("This is CROSS turn\n");}
+    else{fatalError("The asked piece is not recognised.");}
 }
 
 void BoardView_sayCannotPutPiece (void)
 {
-  printf("The square is not empty. Please try again.\n");
+  printf("Sorry but the piece placement is not allowed in that case\n");
 }
 
 #endif // defined CONFIG_TEXTUI

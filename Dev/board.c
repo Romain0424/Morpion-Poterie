@@ -1,8 +1,8 @@
 #include "board.h"
-#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "tictactoe_errors.h"
 
 EndOfGameCallback EndOfGameCallbackFunAdress;
 SquareChangeCallback SquareChangeCallbackFunAdress;
@@ -20,6 +20,10 @@ void checkRow(const PieceType boardSquares[3][3],GameResult * gameResult , Coord
         case CROSS :
             * gameResult = CROSS_WINS;
             break;
+        case NONE :
+            break;
+        default :
+            fatalError("An error happened during checkrow.");
         }
     }
 }
@@ -35,6 +39,10 @@ void checkColumn(const PieceType boardSquares[3][3],GameResult * gameResult , Co
         case CROSS :
             * gameResult = CROSS_WINS;
             break;
+        case NONE :
+            break;
+        default :
+            fatalError("An error happened during checkColumn.");
         }
     }
 }
@@ -43,7 +51,6 @@ void checkUpperDiag(const PieceType boardSquares[3][3],GameResult *gameResult, C
 {
     if(boardSquares[lastY][lastX] == boardSquares[((((int)lastY - 1) % 3)+3)%3][(lastX + 1) % 3] && boardSquares[lastY][lastX] == boardSquares[((((int)lastY - 2) % 3)+3)%3][(lastX + 2) % 3])
     {
-    	printf("Up diag\n");
         switch(Board_getSquareContent(lastX, lastY))
         {
         case CIRCLE :
@@ -52,6 +59,10 @@ void checkUpperDiag(const PieceType boardSquares[3][3],GameResult *gameResult, C
         case CROSS :
             * gameResult = CROSS_WINS;
             break;
+        case NONE :
+            break;
+        default :
+            fatalError("An error happened during checkUpperDiag.");
         }
     }
 }
@@ -67,6 +78,10 @@ void checkDownDiag(const PieceType boardSquares[3][3],GameResult *gameResult , C
         case CROSS :
             * gameResult = CROSS_WINS;
             break;
+        case NONE :
+            break;
+        default :
+            fatalError("An error happened during checkDownDiag.");
         }
     }
 }
@@ -88,9 +103,9 @@ static bool isBoardFull(const PieceType boardSquares[3][3])
 
 void copyCurrentBoard(const PieceType boardSquares[3][3])
 {
-	for(int i = 0;i<3;i++)
+	for(int j = 0;j<3; j++)
 	{
-		for(int j = 0; j<3;j++)
+		for(int i = 0; i<3; i++)
 		{
 			board[j][i] = boardSquares[i][j];
 		}
@@ -137,7 +152,7 @@ static bool isGameFinished (const PieceType boardSquares[3][3], Coordinate lastC
     {
         if(EndOfGameCallbackFunAdress != NULL)
         {
-            EndOfGameCallbackFunAdress(CIRCLE_WINS);
+            EndOfGameCallbackFunAdress((GameResult) CIRCLE_WINS);
         }
         return true;
     }
@@ -145,13 +160,16 @@ static bool isGameFinished (const PieceType boardSquares[3][3], Coordinate lastC
     {
         if(EndOfGameCallbackFunAdress != NULL)
         {
-            EndOfGameCallbackFunAdress(CROSS_WINS);
-        } //TODO deactivate when we want to check the tests (to be modified so we don't do that every time)
+            EndOfGameCallbackFunAdress((GameResult) CROSS_WINS);
+        }
 		return true;
     }
     else if(isBoardFull(board) == true)
 	{
-    	EndOfGameCallbackFunAdress((GameResult) NONE); //TODO deactivate when we want to check the tests (to be modified so we don't do that every time)
+        if(EndOfGameCallbackFunAdress != NULL)
+        {
+            EndOfGameCallbackFunAdress((GameResult) NONE);
+        }
 		return true;
 	}
     else
@@ -162,9 +180,9 @@ static bool isGameFinished (const PieceType boardSquares[3][3], Coordinate lastC
 
 void Board_init (SquareChangeCallback onSquareChange, EndOfGameCallback onEndOfGame)
 {
-    for(int i = 0;i<3;i++)
+    for(int j = 0;j<3;j++)
     {
-        for(int j = 0; j<3;j++)
+        for(int i = 0; i<3; i++)
         {
             board[j][i] = NONE;
         }
@@ -177,9 +195,9 @@ void Board_init (SquareChangeCallback onSquareChange, EndOfGameCallback onEndOfG
 
 void Board_free ()
 {
-	for(int i = 0;i<3;i++)
+	for(int j = 0;j<3;j++)
 	{
-		for(int j = 0; j<3;j++)
+		for(int i = 0; i<3; i++)
 		{
 			board[j][i] = NONE;
 		}
@@ -188,10 +206,6 @@ void Board_free ()
 
 PutPieceResult Board_putPiece (Coordinate x, Coordinate y, PieceType kindOfPiece)
 {
-    int tmp = x;
-    x = y;
-    y = tmp;
-
     GameResult  ResultOfGame = DRAW;
     if(x <= 2 && x >= 0 && y <= 2 && y >= 0 && kindOfPiece != NONE)
     {
@@ -199,13 +213,11 @@ PutPieceResult Board_putPiece (Coordinate x, Coordinate y, PieceType kindOfPiece
         {
             board[y][x] = kindOfPiece;
 
-            printf("piece placed\n");
             SquareChangeCallbackFunAdress(x,y,kindOfPiece);
             isGameFinished(board, x, y, &ResultOfGame);
             return PIECE_IN_PLACE;
         }
     }
-    else{printf("Please return a valid input\n");}
     return SQUARE_IS_NOT_EMPTY;
 }
 
@@ -214,13 +226,10 @@ PieceType Board_getSquareContent (Coordinate x, Coordinate y)
     switch(board[y][x]){
     case CIRCLE :
         return CIRCLE;
-        break;
     case CROSS :
         return CROSS;
-        break;
     case NONE:
         return NONE;
-        break;
     default :
     	exit(-100);
     }
